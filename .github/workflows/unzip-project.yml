@@ -1,0 +1,34 @@
+1name: Extract Go Pigeon Project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract project ZIP
+        run: |
+          rm -rf /tmp/go-pigeon
+          mkdir -p /tmp/go-pigeon
+          unzip -q Go_Pigeon_V1_Mobile_Ready.zip -d /tmp/go-pigeon
+          cp -R /tmp/go-pigeon/. .
+
+      - name: Remove ZIP
+        run: |
+          rm -f Go_Pigeon_V1_Mobile_Ready.zip
+
+      - name: Commit project files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Add Go Pigeon Android project" || echo "Nothing to commit"
+          git push
