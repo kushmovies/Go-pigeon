@@ -1,4 +1,4 @@
-1name: Extract Go Pigeon Project
+name: Extract Go Pigeon Project
 
 on:
   workflow_dispatch:
